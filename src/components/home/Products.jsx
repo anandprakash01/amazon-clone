@@ -25,7 +25,7 @@ const Products = () => {
 
   // using useLoaderData
   const data = useLoaderData();
-  console.log(data.data);
+  // console.log(data.data);
   const productData = data.data;
 
   return (

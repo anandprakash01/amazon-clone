@@ -1,10 +1,14 @@
 import React, {useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
+import {getAuth, createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
 
 import {darkLogo} from "../assets/index";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import {Link} from "react-router-dom";
+import PropagateLoader from "react-spinners/PropagateLoader";
 
 const Registration = () => {
+  const navigate = useNavigate();
+  const auth = getAuth();
   const [userDetails, setUserDetails] = useState({
     name: "",
     email: "",
@@ -20,6 +24,10 @@ const Registration = () => {
     errPassword: "",
     errcPassword: "",
   });
+  const [firebaseErr, setFirebaseErr] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
 
   const handleChange = (e) => {
     switch (e.target.name) {
@@ -30,6 +38,7 @@ const Registration = () => {
       case "email":
         setUserDetails({...userDetails, email: e.target.value});
         setErros({...errors, errEmail: ""});
+        setFirebaseErr("");
         break;
       case "phone":
         setUserDetails({...userDetails, phone: e.target.value});
@@ -63,6 +72,7 @@ const Registration = () => {
     }
     if (!userDetails.email) {
       setErros((pre) => ({...pre, errEmail: "Enter your email"}));
+      setFirebaseErr("");
     } else {
       if (!emailValidation(userDetails.email)) {
         setErros((pre) => ({...pre, errEmail: "Enter a valid email"}));
@@ -90,8 +100,38 @@ const Registration = () => {
       userDetails.password.length >= 6 &&
       userDetails.cPassword == userDetails.password
     ) {
-      console.log(userDetails);
-      console.log(errors);
+      setLoading(true);
+      // console.log(userDetails);
+      // console.log(errors);
+
+      createUserWithEmailAndPassword(auth, userDetails.email, userDetails.password)
+        .then((userCredential) => {
+          updateProfile(auth.currentUser, {
+            displayName: userDetails.name,
+            photoURL:
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUa8PZYe9Y5zyspVmN2TaeyEYezdOp55YvJw&usqp=CAU",
+
+            // phoneNumber: userDetails.phone,
+          });
+          //signin
+          const user = userCredential.user;
+          // console.log(user);
+          setLoading(false);
+          setSuccessMsg("Account Created Successfully");
+
+          setTimeout(() => {
+            navigate("/signin");
+          }, 5000);
+        })
+        .catch((error) => {
+          const errCode = error.code;
+          // const errMsg = error.message;
+          // console.log(error);
+          if (errCode.includes("auth/email-already-in-use")) {
+            setFirebaseErr("Email Already in use, Try another one");
+          }
+        });
+
       setUserDetails({name: "", email: "", phone: "", password: "", cPassword: ""});
     }
   };
@@ -138,6 +178,14 @@ const Registration = () => {
                       !
                     </span>
                     {errors.errEmail}
+                  </p>
+                )}
+                {firebaseErr && (
+                  <p className="text-red-600 text-xs font-semibold tracking-wide flex items-center gap-2 -mt-1.5">
+                    <span className="italic font-titleFont font-extrabold text-base">
+                      !
+                    </span>
+                    {firebaseErr}
                   </p>
                 )}
               </div>
@@ -206,6 +254,16 @@ const Registration = () => {
               >
                 Continue
               </button>
+              {loading && (
+                <div className="mx-auto my-5">
+                  <PropagateLoader color="#00ab26" />
+                </div>
+              )}
+              {successMsg && (
+                <div>
+                  <p className=" text-center text-l text-green-600 ">{successMsg}</p>
+                </div>
+              )}
             </div>
             <p className="text-xs text-black leading-4 mt-4">
               By Creating Account, you agree to Amazon's{" "}
