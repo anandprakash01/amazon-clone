@@ -1,14 +1,55 @@
-import { useState } from "react";
+import {useState} from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
+import "slick-carousel/slick/slick.css";
+import {ScrollRestoration} from "react-router-dom";
 
-function App() {
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
+  Route,
+  createRoutesFromElements,
+  Routes,
+} from "react-router-dom";
+
+import Header from "./components/header/Header";
+import Banner from "./components/home/Banner";
+import Footer from "./components/footer/Footer";
+import Home from "./pages/Home";
+import {productsData} from "./api/api";
+import SignIn from "./pages/SignIn";
+import Registration from "./pages/Registration";
+import {Cart} from "./pages/Cart";
+
+const Layout = () => {
   return (
     <>
-      <h1>hey:)</h1>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+      <Header />
+      <ScrollRestoration />
+      <Outlet />
+      <Footer />
     </>
+  );
+};
+function App() {
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} loader={productsData}></Route>
+          <Route path="/cart" element={<Cart />}></Route>
+        </Route>
+        <Route path="/signin" element={<SignIn />}></Route>
+        <Route path="/registration" element={<Registration />}></Route>
+      </Route>
+    )
+  );
+  return (
+    <div className="font-bodyFont bg-gray-100">
+      <RouterProvider router={router}></RouterProvider>
+    </div>
   );
 }
 
