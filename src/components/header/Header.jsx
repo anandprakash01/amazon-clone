@@ -22,15 +22,18 @@ const Header = () => {
   // console.log(productsCart);
   // console.log(userInfo);
   const data = useLoaderData();
+  // const searchProducts = useSelector((state) => state.amazon.searchProducts);
 
   // console.log(data.data);
 
   const [showAll, setShowall] = useState(false);
-  const ref = useRef();
+  const refInput = useRef();
 
-  const [inputField, setIputField] = useState("");
+  // const [inputField, setIputField] = useState("");
 
-  const searchProducts = useSelector((state) => state.amazon.searchProducts);
+  if (refInput?.current?.value == 0) {
+    dispatch(setSearchProducts(data.data));
+  }
 
   const handleLogOut = () => {
     signOut(auth)
@@ -47,7 +50,7 @@ const Header = () => {
   };
 
   const handleSearch = (e) => {
-    setIputField(e.target.value);
+    // setIputField(e.target.value);
     dispatch(
       setSearchProducts(
         data.data.filter((prod) => {
@@ -104,8 +107,9 @@ const Header = () => {
             )}
           </span>
           <input
-            value={inputField}
+            // value={inputField}
             onChange={handleSearch}
+            ref={refInput}
             className="h-full text-base text-amazon_blue flex-grow outline-none border-none px-2"
             type="text"
           />

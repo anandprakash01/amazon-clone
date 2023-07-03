@@ -30,12 +30,10 @@ const ProductDetails = () => {
           alt="Product Image"
         />
 
-        <div className="px-4 z-10 bg-white">
-          <div className="flex items-center justify-between">
-            <h2 className="font-titleFont tracking-wide text-lg text-amazon_blue font-medium">
-              {productInfo.title}
-            </h2>
-          </div>
+        <div className="px-10 z-10 bg-white">
+          <h2 className="font-titleFont tracking-wide text-lg text-amazon_blue font-medium">
+            {productInfo.title}
+          </h2>
           <div>
             <p className="text-sm">{productInfo.description}</p>
             <p className="text-xl font-semibold my-1">
