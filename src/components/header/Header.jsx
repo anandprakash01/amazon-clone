@@ -1,5 +1,5 @@
 import React, {useRef, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useLoaderData} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getAuth, signOut} from "firebase/auth";
 
@@ -12,17 +12,25 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {logo} from "../../assets/index";
 import {allItems} from "../../constants";
 import HeaderBottom from "./HeaderBottom";
-import {userSignOut} from "../../redux/amazonSlice";
+import {setSearchProducts, userSignOut} from "../../redux/amazonSlice";
 
 const Header = () => {
   const auth = getAuth();
+  const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.amazon.userInfo);
-  const products = useSelector((state) => state.amazon.products);
-  // console.log(products);
+  const productsCart = useSelector((state) => state.amazon.products);
+  // console.log(productsCart);
   // console.log(userInfo);
+  const data = useLoaderData();
+
+  // console.log(data.data);
+
   const [showAll, setShowall] = useState(false);
   const ref = useRef();
-  const dispatch = useDispatch();
+
+  const [inputField, setIputField] = useState("");
+
+  const searchProducts = useSelector((state) => state.amazon.searchProducts);
 
   const handleLogOut = () => {
     signOut(auth)
@@ -35,8 +43,21 @@ const Header = () => {
         const errMsg = error.message;
         console.log(errCode, errMsg);
       });
-    console.log(userInfo);
+    // console.log(userInfo);
   };
+
+  const handleSearch = (e) => {
+    setIputField(e.target.value);
+    dispatch(
+      setSearchProducts(
+        data.data.filter((prod) => {
+          return prod.title.toLowerCase().includes(e.target.value.toLowerCase());
+        })
+      )
+    );
+  };
+  // console.log(searchProducts);
+
   return (
     <div className="w-full sticky top-0 z-50">
       <div className="w-full bg-amazon_blue text-white px-4 py-3 flex items-center gap-4">
@@ -83,6 +104,8 @@ const Header = () => {
             )}
           </span>
           <input
+            value={inputField}
+            onChange={handleSearch}
             className="h-full text-base text-amazon_blue flex-grow outline-none border-none px-2"
             type="text"
           />
@@ -134,7 +157,7 @@ const Header = () => {
             <p className="text-xs font-semibold mt-3 text-whiteText">
               Cart{" "}
               <span className="absolute text-xs -top-1 left-6 font-semibold p-1 h-4 bg-[#f3a847] text-amazon_blue rounded-full flex justify-center items-center">
-                {products.length}
+                {productsCart.length}
               </span>
             </p>
           </div>
