@@ -29,9 +29,9 @@ const Header = () => {
   const [showAll, setShowall] = useState(false);
   const refInput = useRef();
 
-  // const [inputField, setIputField] = useState("");
+  const [inputField, setIputField] = useState("");
 
-  if (refInput?.current?.value == 0) {
+  if (inputField == "") {
     dispatch(setSearchProducts(data.data));
   }
 
@@ -50,7 +50,7 @@ const Header = () => {
   };
 
   const handleSearch = (e) => {
-    // setIputField(e.target.value);
+    setIputField(e.target.value);
     dispatch(
       setSearchProducts(
         data.data.filter((prod) => {
@@ -107,7 +107,7 @@ const Header = () => {
             )}
           </span>
           <input
-            // value={inputField}
+            value={inputField}
             onChange={handleSearch}
             ref={refInput}
             className="h-full text-base text-amazon_blue flex-grow outline-none border-none px-2"
