@@ -1,20 +1,42 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
+import {Link} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {getAuth, signOut} from "firebase/auth";
+
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import {ArrowDropDownOutlined} from "@mui/icons-material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import {logo} from "../../assets/index";
 import {allItems} from "../../constants";
 import HeaderBottom from "./HeaderBottom";
-import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {userSignOut} from "../../redux/amazonSlice";
 
 const Header = () => {
-  const [showAll, setShowall] = useState(false);
+  const auth = getAuth();
+  const userInfo = useSelector((state) => state.amazon.userInfo);
   const products = useSelector((state) => state.amazon.products);
   // console.log(products);
+  // console.log(userInfo);
+  const [showAll, setShowall] = useState(false);
+  const ref = useRef();
+  const dispatch = useDispatch();
 
+  const handleLogOut = () => {
+    signOut(auth)
+      .then(() => {
+        dispatch(userSignOut());
+        console.log("signed out");
+      })
+      .catch((error) => {
+        const errCode = error.code;
+        const errMsg = error.message;
+        console.log(errCode, errMsg);
+      });
+    console.log(userInfo);
+  };
   return (
     <div className="w-full sticky top-0 z-50">
       <div className="w-full bg-amazon_blue text-white px-4 py-3 flex items-center gap-4">
@@ -69,10 +91,11 @@ const Header = () => {
           </span>
         </div>
         {/* ==================Signin Start=================== */}
-        <Link to="/signin">
+
+        {userInfo ? (
           <div className="flex flex-col items-start justify-center headerHover">
-            <p className="text-sm mdl:text-xs text-white mdl:text-lightText font-light">
-              Hello, sign in
+            <p className="text-xs text-white font-medium">
+              <AccountCircleIcon /> {userInfo.userName}
             </p>
             <p className="text-sm font-semibold -mt-1 text-whiteText hidden mdl:inline-flex">
               Accounts & list{" "}
@@ -81,7 +104,23 @@ const Header = () => {
               </span>
             </p>
           </div>
-        </Link>
+        ) : (
+          <Link to="/signin">
+            <div className="flex flex-col items-start justify-center headerHover">
+              <p className="text-sm mdl:text-xs text-white mdl:text-lightText font-light">
+                Hello, sign in
+              </p>
+
+              <p className="text-sm font-semibold -mt-1 text-whiteText hidden mdl:inline-flex">
+                Accounts & list{" "}
+                <span>
+                  <ArrowDropDownOutlined />
+                </span>
+              </p>
+            </div>
+          </Link>
+        )}
+
         {/* ==================Orders Start=================== */}
 
         <div className="hidden lgl:flex flex-col items-start justify-center headerHover">
@@ -101,6 +140,10 @@ const Header = () => {
           </div>
         </Link>
         {/* ==================Card End=================== */}
+
+        <div onClick={handleLogOut} className="headerHover">
+          Sign Out
+        </div>
       </div>
       <HeaderBottom />
     </div>

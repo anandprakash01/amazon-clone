@@ -1,12 +1,15 @@
 import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
+import {useDispatch} from "react-redux";
+import {setUserInfo} from "../redux/amazonSlice";
 
 import {darkLogo} from "../assets/index";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import PropagateLoader from "react-spinners/PropagateLoader";
 
 const SignIn = () => {
+  const dispatch = useDispatch();
   const auth = getAuth();
   const navigate = useNavigate();
 
@@ -52,9 +55,18 @@ const SignIn = () => {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
+          dispatch(
+            setUserInfo({
+              id: user.uid,
+              userName: user.displayName,
+              email: user.email,
+              image: user.photoURL,
+            })
+          );
           // console.log(user);
           setLoading(false);
           setSuccessMsg("Logged in Successfully! Welcome you back");
+
           setTimeout(() => {
             navigate("/");
           }, 3000);

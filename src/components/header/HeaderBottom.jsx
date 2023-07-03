@@ -1,4 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
+import {useSelector} from "react-redux";
+
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -8,6 +10,8 @@ import {motion} from "framer-motion";
 import SideNavContent from "./SideNavContent";
 
 const HeaderBottom = () => {
+  const userInfo = useSelector((state) => state.amazon.userInfo);
+
   const [sidebar, setSideBar] = useState(false);
   const ref = useRef();
   useEffect(() => {
@@ -56,9 +60,15 @@ const HeaderBottom = () => {
             >
               <div className="w-full bg-amazon_lite text-white py-2 px-6 flex items-center gap-4">
                 <AccountCircleIcon />
-                <h3 className="font-titleFont font-bold text-lg tracking-wide">
-                  Hello, Sign In
-                </h3>
+                {userInfo ? (
+                  <h3 className="font-titleFont font-bold text-lg tracking-wide">
+                    Hello, {userInfo.userName}
+                  </h3>
+                ) : (
+                  <h3 className="font-titleFont font-bold text-lg tracking-wide">
+                    Hello, Sign In
+                  </h3>
+                )}
               </div>
               <SideNavContent
                 title="Digital Content & Divices"
