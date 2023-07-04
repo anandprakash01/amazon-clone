@@ -1,4 +1,4 @@
 # amazon-clone
-- default login Email:
+- default login :
 - admin@gmail.com
 - password: 123456
