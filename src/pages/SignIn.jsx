@@ -1,16 +1,29 @@
 import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
 import {useDispatch} from "react-redux";
 import {setUserInfo} from "../redux/amazonSlice";
 
+//firebase imports for authentication
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
+
 import {darkLogo} from "../assets/index";
+
+import {FcGoogle} from "react-icons/fc";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import GoogleIcon from "@mui/icons-material/Google";
 import PropagateLoader from "react-spinners/PropagateLoader";
 
 const SignIn = () => {
-  const dispatch = useDispatch();
+  //for firebase authentication
   const auth = getAuth();
+  const provider = new GoogleAuthProvider();
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -40,7 +53,7 @@ const SignIn = () => {
     // console.log(email, password);
   };
 
-  const handleLogin = (e) => {
+  const handleLoginWithEmail = (e) => {
     e.preventDefault();
     if (!email) {
       setErrEmail("Enter your email");
@@ -60,12 +73,14 @@ const SignIn = () => {
               id: user.uid,
               userName: user.displayName,
               email: user.email,
-              image: user.photoURL,
+              photoURL: user.photoURL,
             })
           );
           // console.log(user);
           setLoading(false);
-          setSuccessMsg("Logged in Successfully! Welcome you back");
+          setSuccessMsg(
+            "Logged in Successfully! Welcome you back. Redirecting you to Home page..."
+          );
 
           setTimeout(() => {
             navigate("/");
@@ -86,6 +101,35 @@ const SignIn = () => {
       setEmail("");
       setPassword("");
     }
+  };
+
+  const handleLoginWithGoogle = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // console.log("received result : ", result);
+        const user = result.user;
+        dispatch(
+          setUserInfo({
+            id: user.uid,
+            userName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+          })
+        );
+        setLoading(false);
+        setSuccessMsg(
+          "Logged in Successfully! Welcome you back. Redirecting you to Home page..."
+        );
+
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
+      })
+      .catch((error) => {
+        console.log("ERROR: ", error);
+      });
   };
 
   return (
@@ -156,11 +200,27 @@ const SignIn = () => {
                   )}
                 </div>
                 <button
-                  onClick={handleLogin}
+                  onClick={handleLoginWithEmail}
                   className="w-full py-1.5 text-sm font-normal rounded-sm bg-gradient-to-t from-[#f7dfa5] to-[#f0c14b] hover:bg-gradient-to-b border border-zinc-400 active:border-yellow-800 active:shadow-amazonInput"
                 >
                   Continue
                 </button>
+                <div className="text-center">Or</div>
+                <button
+                  onClick={handleLoginWithGoogle}
+                  className="w-full py-1.5 text-sm font-normal rounded-sm bg-gradient-to-t from-[#f7dfa5] to-[#f0c14b] hover:bg-gradient-to-b border border-zinc-400 active:border-yellow-800 active:shadow-amazonInput"
+                >
+                  {/* <GoogleIcon /> */}
+                  <FcGoogle
+                    size="1.5rem"
+                    style={{
+                      // fontSize: "3rem",
+                      display: "inline",
+                    }}
+                  />
+                  Sign in with google
+                </button>
+
                 {loading && (
                   <div className="mx-auto my-5">
                     <PropagateLoader color="#00ab26" />

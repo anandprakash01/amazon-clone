@@ -8,6 +8,8 @@ import {ArrowDropDownOutlined} from "@mui/icons-material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
+import Avatar from "@mui/material/Avatar";
 
 import {logo} from "../../assets/index";
 import {allItems} from "../../constants";
@@ -121,9 +123,32 @@ const Header = () => {
 
         {userInfo ? (
           <div className="flex flex-col items-start justify-center headerHover">
-            <p className="text-xs text-white font-medium">
-              <AccountCircleIcon /> {userInfo.userName}
-            </p>
+            <div className="flex flex-col mdl:flex-row items-center gap-1">
+              {userInfo.photoURL ? (
+                <Avatar
+                  alt="Avatar"
+                  src={userInfo.photoURL}
+                  sx={{
+                    width: "1.5rem",
+                    height: "1.5rem",
+                    // display: "inline-block",
+                  }}
+                  className=""
+                />
+              ) : (
+                <Avatar
+                  sx={{
+                    width: "1.5rem",
+                    height: "1.5rem",
+                    // display: "inline-block",
+                  }}
+                >
+                  {userInfo.userName.split(" ")[0][0] +
+                    userInfo.userName.split(" ")[1][0]}
+                </Avatar>
+              )}
+              <p className="text-xs text-white font-medium">Hello, {userInfo.userName}</p>
+            </div>
             <p className="text-sm font-semibold -mt-1 text-whiteText hidden mdl:inline-flex">
               Accounts & list{" "}
               <span>
@@ -168,9 +193,11 @@ const Header = () => {
         </Link>
         {/* ==================Card End=================== */}
 
-        <div onClick={handleLogOut} className="headerHover">
-          Sign Out
-        </div>
+        {userInfo && (
+          <div onClick={handleLogOut} className="headerHover">
+            <LogoutIcon />
+          </div>
+        )}
       </div>
       <HeaderBottom />
     </div>

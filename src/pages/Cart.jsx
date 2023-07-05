@@ -64,7 +64,7 @@ export const Cart = () => {
                           onClick={() => {
                             dispatch(decrementQuantity(p.id));
                           }}
-                          className="cursor-pointer bg-gray-200 px-1 rounded-md hover:bg-gray-400 duration-300"
+                          className="cursor-pointer bg-gray-200 px-1 rounded-md hover:bg-gray-400 duration-300 select-none"
                         >
                           -
                         </p>
@@ -73,7 +73,7 @@ export const Cart = () => {
                           onClick={() => {
                             dispatch(incrementQuantity(p.id));
                           }}
-                          className="cursor-pointer bg-gray-200 px-1 rounded-md hover:bg-gray-400 duration-300"
+                          className="cursor-pointer bg-gray-200 px-1 rounded-md hover:bg-gray-400 duration-300 select-none"
                         >
                           +
                         </p>

@@ -8,6 +8,7 @@ import {KeyboardArrowRight} from "@mui/icons-material";
 import {motion} from "framer-motion";
 
 import SideNavContent from "./SideNavContent";
+import {Avatar} from "@mui/material";
 
 const HeaderBottom = () => {
   const userInfo = useSelector((state) => state.amazon.userInfo);
@@ -40,10 +41,12 @@ const HeaderBottom = () => {
           <MenuIcon />
           All
         </li>
-        <li className="headerHover hidden md:inline-flex">Today's Deals</li>
-        <li className="headerHover hidden md:inline-flex">Customer Services</li>
-        <li className="headerHover hidden md:inline-flex">Gift Cards</li>
-        <li className="headerHover hidden md:inline-flex">Sell</li>
+        <li className="headerHover hidden mdl:inline-flex">Today's Deals</li>
+        <li className="headerHover hidden mdl:inline-flex">Customer Services</li>
+        <li className="headerHover hidden mdl:inline-flex">Gift Cards</li>
+        <li className="headerHover hidden mdl:inline-flex">Sell</li>
+        <li className="headerHover hidden mdl:inline-flex">Smart Phones</li>
+        <li className="headerHover hidden mdl:inline-flex">Laptops</li>
       </ul>
 
       {/* ------------------SideNav start----------------------- */}
@@ -59,16 +62,22 @@ const HeaderBottom = () => {
               className="w-[80%] md:w-[350px] h-full bg-white border border-black"
             >
               <div className="w-full bg-amazon_lite text-white py-2 px-6 flex items-center gap-4">
-                <AccountCircleIcon />
-                {userInfo ? (
-                  <h3 className="font-titleFont font-bold text-lg tracking-wide">
-                    Hello, {userInfo.userName}
-                  </h3>
-                ) : (
-                  <h3 className="font-titleFont font-bold text-lg tracking-wide">
-                    Hello, Sign In
-                  </h3>
-                )}
+                <Avatar
+                  alt="Avatar"
+                  src={userInfo.photoURL}
+                  sx={{
+                    width: "2.5rem",
+                    height: "2.5rem",
+                    // display: "inline-block",
+                  }}
+                >
+                  {userInfo.userName.split(" ")[0][0] +
+                    userInfo.userName.split(" ")[1][0]}
+                </Avatar>
+
+                <h3 className="font-titleFont font-bold text-lg tracking-wide">
+                  {userInfo ? `Hello, ${userInfo.userName}` : "Hello, Sign In"}
+                </h3>
               </div>
               <SideNavContent
                 title="Digital Content & Divices"

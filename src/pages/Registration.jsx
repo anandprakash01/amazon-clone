@@ -1,14 +1,29 @@
 import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {getAuth, createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
+import {useDispatch} from "react-redux";
+
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 
 import {darkLogo} from "../assets/index";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import PropagateLoader from "react-spinners/PropagateLoader";
+import {FcGoogle} from "react-icons/fc";
+import {setUserInfo} from "../redux/amazonSlice";
 
 const Registration = () => {
-  const navigate = useNavigate();
+  //firebase
   const auth = getAuth();
+  const provider = new GoogleAuthProvider();
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [userDetails, setUserDetails] = useState({
     name: "",
     email: "",
@@ -108,20 +123,20 @@ const Registration = () => {
         .then((userCredential) => {
           updateProfile(auth.currentUser, {
             displayName: userDetails.name,
-            photoURL:
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUa8PZYe9Y5zyspVmN2TaeyEYezdOp55YvJw&usqp=CAU",
+            // photoURL:
+            //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUa8PZYe9Y5zyspVmN2TaeyEYezdOp55YvJw&usqp=CAU",
 
             // phoneNumber: userDetails.phone,
           });
-          //signin
+          //account created
           const user = userCredential.user;
           // console.log(user);
           setLoading(false);
-          setSuccessMsg("Account Created Successfully");
+          setSuccessMsg("Account Created Successfully. Redirecting to Login Page...");
 
           setTimeout(() => {
             navigate("/signin");
-          }, 5000);
+          }, 2000);
         })
         .catch((error) => {
           const errCode = error.code;
@@ -134,6 +149,35 @@ const Registration = () => {
 
       setUserDetails({name: "", email: "", phone: "", password: "", cPassword: ""});
     }
+  };
+
+  const handleLoginWithGoogle = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        console.log(result);
+        const user = result.user;
+        dispatch(
+          setUserInfo({
+            id: user.uid,
+            userName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+          })
+        );
+        setLoading(false);
+        setSuccessMsg(
+          "Logged in Successfully! Welcome you back. Redirecting you to Home page..."
+        );
+
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
+      })
+      .catch((error) => {
+        console.log("ERROR: ", error);
+      });
   };
 
   return (
@@ -253,6 +297,21 @@ const Registration = () => {
                 className="w-full py-1.5 text-sm font-normal rounded-sm bg-gradient-to-t from-[#f7dfa5] to-[#f0c14b] hover:bg-gradient-to-b border border-zinc-400 active:border-yellow-800 active:shadow-amazonInput"
               >
                 Continue
+              </button>
+              <div className="text-center">Or</div>
+              <button
+                onClick={handleLoginWithGoogle}
+                className="w-full py-1.5 text-sm font-normal rounded-sm bg-gradient-to-t from-[#f7dfa5] to-[#f0c14b] hover:bg-gradient-to-b border border-zinc-400 active:border-yellow-800 active:shadow-amazonInput"
+              >
+                {/* <GoogleIcon /> */}
+                <FcGoogle
+                  size="1.5rem"
+                  style={{
+                    // fontSize: "3rem",
+                    display: "inline",
+                  }}
+                />
+                Sign in with google
               </button>
               {loading && (
                 <div className="mx-auto my-5">
