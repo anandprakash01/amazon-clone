@@ -1,9 +1,10 @@
 import {useState} from "react";
+import {ScrollRestoration} from "react-router-dom";
+
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import "slick-carousel/slick/slick.css";
-import {ScrollRestoration} from "react-router-dom";
 
 import {
   createBrowserRouter,
