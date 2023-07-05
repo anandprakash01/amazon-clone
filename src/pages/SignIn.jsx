@@ -128,6 +128,7 @@ const SignIn = () => {
         }, 3000);
       })
       .catch((error) => {
+        setLoading(false);
         console.log("ERROR: ", error);
       });
   };

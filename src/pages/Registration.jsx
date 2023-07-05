@@ -139,6 +139,7 @@ const Registration = () => {
           }, 2000);
         })
         .catch((error) => {
+          setLoading(false);
           const errCode = error.code;
           // const errMsg = error.message;
           // console.log(error);
@@ -176,6 +177,7 @@ const Registration = () => {
         }, 3000);
       })
       .catch((error) => {
+        setLoading(false);
         console.log("ERROR: ", error);
       });
   };
