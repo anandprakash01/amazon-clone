@@ -19,7 +19,7 @@ const ProductDetails = () => {
       const res = await axios.get(
         `https://content.newtonschool.co/v1/pr/63b6c911af4f30335b4b3b89/products/${params.id}`
       );
-      // console.log(res.data);
+      console.log(res.data);
       setProductInfo(res.data);
     })();
   }, [params.id]);
@@ -54,7 +54,7 @@ const ProductDetails = () => {
   };
   return (
     <div>
-      <div className="bg-white w-full h-auto flex flex-row xs:flex-col sm:flex-col md:flex-row justify-center items-center px-52 py-24">
+      <div className="bg-white w-full h-auto flex flex-row xs:flex-col sm:flex-col md:flex-row justify-center items-center px-52 xs:px-10 sm:px-10 md:px-10 mdl:px-20 lg:px-52 py-24">
         <img
           className="w-80 h-96 object-contain"
           src={productInfo.image}
@@ -79,6 +79,11 @@ const ProductDetails = () => {
               />
               <p className="text-xs text-gray-500">{productInfo.rating?.count} Ratings</p>
             </div>
+          </div>
+          <div className="text-base">
+            {Math.floor(productInfo.rating?.rate) > 3
+              ? `Best in ${productInfo.category}`
+              : ""}
           </div>
           {cartProducts.find((product) => product.id == params.id) ? (
             <button
