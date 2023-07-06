@@ -71,8 +71,10 @@ const HeaderBottom = () => {
                     // display: "inline-block",
                   }}
                 >
-                  {userInfo?.userName.split(" ")[0][0] +
-                    userInfo?.userName.split(" ")[1][0]}
+                  {userInfo
+                    ? userInfo.userName.split(" ")[0][0] +
+                      userInfo.userName.split(" ")[1][0]
+                    : null}
                 </Avatar>
 
                 <h3 className="font-titleFont font-bold text-lg tracking-wide">
