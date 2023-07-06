@@ -64,19 +64,19 @@ const HeaderBottom = () => {
               <div className="w-full bg-amazon_lite text-white py-2 px-6 flex items-center gap-4">
                 <Avatar
                   alt="Avatar"
-                  src={userInfo.photoURL}
+                  src={userInfo?.photoURL}
                   sx={{
                     width: "2.5rem",
                     height: "2.5rem",
                     // display: "inline-block",
                   }}
                 >
-                  {userInfo.userName.split(" ")[0][0] +
-                    userInfo.userName.split(" ")[1][0]}
+                  {userInfo?.userName.split(" ")[0][0] +
+                    userInfo?.userName.split(" ")[1][0]}
                 </Avatar>
 
                 <h3 className="font-titleFont font-bold text-lg tracking-wide">
-                  {userInfo ? `Hello, ${userInfo.userName}` : "Hello, Sign In"}
+                  {userInfo ? `Hello, ${userInfo?.userName}` : "Hello, Sign In"}
                 </h3>
               </div>
               <SideNavContent

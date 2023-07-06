@@ -68,6 +68,7 @@ const SignIn = () => {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
+          console.log(user);
           dispatch(
             setUserInfo({
               id: user.uid,
@@ -93,6 +94,9 @@ const SignIn = () => {
           // console.log(error);
           if (errCode.includes("auth/invalid-email")) {
             setUserEmailerr("Invalid Email");
+          }
+          if (errCode.includes("auth/user-not-found")) {
+            setUserEmailerr("User not found, Please Register First");
           }
           if (errCode.includes("auth/wrong-password")) {
             setUserPassworderr("Wrong Password! try again");
