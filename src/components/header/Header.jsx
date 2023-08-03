@@ -29,6 +29,7 @@ const Header = () => {
   // console.log(data.data);
 
   const [showAll, setShowall] = useState(false);
+  const [selected, setSelected] = useState("All");
   const refInput = useRef();
 
   const [inputField, setIputField] = useState("");
@@ -85,18 +86,22 @@ const Header = () => {
         <div className="h-10 rounded-md  hidden lgl:flex flex-grow relative">
           <span
             onClick={() => setShowall(!showAll)}
-            className="w-14 h-full bg-gray-200 hover:bg-gray-300 border-2 cursor-pointer duration-300 text-sm text-amazon_blue font-titleFont flex items-center justify-center rounded-tl-md rounded-bl-md"
+            className=" h-full bg-gray-200 hover:bg-gray-300 border-2 cursor-pointer duration-300 text-sm text-amazon_blue font-titleFont flex items-center justify-center rounded-tl-md rounded-bl-md"
           >
-            All{" "}
+            {selected}
             <span>
               <ArrowDropDownOutlined />
             </span>
             {showAll && (
               <div>
-                <ul className="absolute w-56 h-80 top-10 left-0 overflow-y-scroll overflow-x-hidden bg-white border-[1px] border-amazon_blue text-black p-2 flex-col gap-1 z-50">
+                <ul className="absolute w-56 h-80 top-10 left-0 rounded-lg overflow-auto overflow-x-hidden bg-white border-[1px] border-amazon_blue text-black p-2 flex-col gap-1 z-50">
                   {allItems.map((item) => {
                     return (
                       <li
+                        onClick={() => {
+                          setSelected(item.title);
+                          setShowall(!showAll);
+                        }}
                         key={item.id}
                         className="text-sm tracking-wide font-titleFont border-b-[1px] border-b-transparent hover:border-b-amazon_blue cursor-pointer duration-200"
                       >
@@ -175,10 +180,12 @@ const Header = () => {
 
         {/* ==================Orders Start=================== */}
 
-        <div className="hidden lgl:flex flex-col items-start justify-center headerHover">
-          <p className="text-xs text-lightText font-light">Returns</p>
-          <p className="text-sm font-semibold -mt-1 text-whiteText">& Orders</p>
-        </div>
+        <Link to="/returns&order">
+          <div className="hidden lgl:flex flex-col items-start justify-center headerHover">
+            <p className="text-xs text-lightText font-light">Returns</p>
+            <p className="text-sm font-semibold -mt-1 text-whiteText">& Orders</p>
+          </div>
+        </Link>
         {/* ==================Card Start=================== */}
         <Link to="/cart">
           <div className="flex items-start justify-center headerHover relative">

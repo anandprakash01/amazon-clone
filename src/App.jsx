@@ -24,6 +24,8 @@ import SignIn from "./pages/SignIn";
 import Registration from "./pages/Registration";
 import {Cart} from "./pages/Cart";
 import ProductDetails from "./pages/ProductDetails";
+import CommingSoon from "./pages/CommingSoon";
+import Returns from "./pages/Returns";
 
 const Layout = () => {
   return (
@@ -43,6 +45,8 @@ function App() {
           <Route index element={<Home />} loader={productsData}></Route>
           <Route path="/cart" element={<Cart />}></Route>
           <Route path="/product-details/:id" element={<ProductDetails />}></Route>
+          <Route path="/comming-soon" element={<CommingSoon />}></Route>
+          <Route path="/returns&order" element={<Returns />}></Route>
         </Route>
         <Route path="/signin" element={<SignIn />}></Route>
         <Route path="/registration" element={<Registration />}></Route>

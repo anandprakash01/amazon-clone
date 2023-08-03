@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
+import {Link} from "react-router-dom";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
@@ -41,12 +42,24 @@ const HeaderBottom = () => {
           <MenuIcon />
           All
         </li>
-        <li className="headerHover hidden mdl:inline-flex">Today's Deals</li>
-        <li className="headerHover hidden mdl:inline-flex">Customer Services</li>
-        <li className="headerHover hidden mdl:inline-flex">Gift Cards</li>
-        <li className="headerHover hidden mdl:inline-flex">Sell</li>
-        <li className="headerHover hidden mdl:inline-flex">Smart Phones</li>
-        <li className="headerHover hidden mdl:inline-flex">Laptops</li>
+        <Link to="/comming-soon">
+          <li className="headerHover hidden mdl:inline-flex">Today's Deals</li>
+        </Link>
+        <Link to="/comming-soon">
+          <li className="headerHover hidden mdl:inline-flex">Customer Services</li>
+        </Link>
+        <Link to="/comming-soon">
+          <li className="headerHover hidden mdl:inline-flex">Gift Cards</li>
+        </Link>
+        <Link to="/comming-soon">
+          <li className="headerHover hidden mdl:inline-flex">Sell</li>
+        </Link>
+        <Link to="/comming-soon">
+          <li className="headerHover hidden mdl:inline-flex">Smart Phones</li>
+        </Link>
+        <Link to="/comming-soon">
+          <li className="headerHover hidden mdl:inline-flex">Laptops</li>
+        </Link>
       </ul>
 
       {/* ------------------SideNav start----------------------- */}
