@@ -18,8 +18,9 @@ The main features and functionalities of Amazon project are:
 - Presist Storage
 - User authentication (sign up, log in, log out)
 - Browse and search products
+- See product details
 - Add products to cart
-- View order history
+- View order and return history
 
 ## Demo
 
