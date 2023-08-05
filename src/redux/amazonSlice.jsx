@@ -4,6 +4,7 @@ const initialState = {
   products: [], //Cart Products
   userInfo: null,
   searchProducts: [],
+  wishlist: [],
 };
 
 export const amazonSlice = createSlice({
