@@ -15,11 +15,11 @@ const HeaderBottom = () => {
   const userInfo = useSelector((state) => state.amazon.userInfo);
 
   const [sidebar, setSideBar] = useState(false);
-  const ref = useRef();
+  const refSideNavContainer = useRef();
   useEffect(() => {
     const outsideClick = (e) => {
-      console.log("clicked,", e.target);
-      if (e.target.contains(ref.current)) {
+      // console.log("clicked,", e.target);
+      if (e.target.contains(refSideNavContainer.current)) {
         setSideBar(false);
       }
     };
@@ -29,7 +29,7 @@ const HeaderBottom = () => {
     return () => {
       document.body.removeEventListener("click", outsideClick);
     };
-  }, [ref, sidebar]);
+  }, [refSideNavContainer, sidebar]);
 
   return (
     <div className="w-full px-4 h-[36px] bg-amazon_lite text-white flex items-center">
@@ -68,7 +68,7 @@ const HeaderBottom = () => {
         <div className="w-full h-screen text-black fixed top-0 left-0 bg-amazon_blue bg-opacity-50 ">
           <div className="w-full h-full relative">
             <motion.div
-              ref={ref}
+              ref={refSideNavContainer}
               initial={{x: -500, opacity: 0}}
               animate={{x: 0, opacity: 1}}
               transition={{duration: 0.5}}
@@ -111,12 +111,6 @@ const HeaderBottom = () => {
                 one="Gift Cards"
                 two="Amazon live"
                 three="International Shopping"
-              />
-              <SideNavContent
-                title="Help & Setting"
-                one="Your Account"
-                two="Customer Service"
-                three="Contact us"
               />
               <span
                 onClick={() => setSideBar(false)}

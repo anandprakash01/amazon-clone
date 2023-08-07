@@ -5,19 +5,9 @@ import {useDispatch, useSelector} from "react-redux";
 
 import ProductCard from "../productCard/ProductCard";
 import PropagateLoader from "react-spinners/PropagateLoader";
-import {setSearchProducts} from "../../redux/amazonSlice";
+import {setSearchProducts, setInputSearchVal} from "../../redux/amazonSlice";
 
 const Products = () => {
-  // useEffect(() => {
-  //   (async () => {
-  //     const res = await axios.get(
-  //       "https://content.newtonschool.co/v1/pr/63b6c911af4f30335b4b3b89/products"
-  //     );
-
-  //     console.log(res.data);
-  //   })();
-  // }, []);
-
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 

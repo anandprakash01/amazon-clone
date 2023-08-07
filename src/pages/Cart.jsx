@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import {useState, useEffect} from "react";
 import {
+  addToWishlist,
   decrementQuantity,
   deleteItem,
   incrementQuantity,
@@ -10,6 +11,7 @@ import {
 } from "../redux/amazonSlice";
 import {emptyCart} from "../assets/index";
 import {Link} from "react-router-dom";
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 
 export const Cart = () => {
   const dispatch = useDispatch();
@@ -52,12 +54,13 @@ export const Cart = () => {
                     <div className="w-4/5">
                       <h2 className="font-semibold text-lg">{p.title}</h2>
                       <p className="text-sm">{p.description.substring(0, 125)}</p>
-                      <p className="text-base ">
-                        Unit Price{"  "}
-                        <span className="font-semibold">
-                          ₹{(p.price * 82).toFixed(2)}
-                        </span>
-                      </p>
+                      <div className="flex gap-5 items-center text-base ">
+                        <p>Unit Price</p>
+                        <p className="flex gap-2 items-center text-lg font-titleFont font-semibold">
+                          <CurrencyRupeeIcon style={{fontSize: "1rem"}} />
+                          <span>{(p.price * p.quantity * 82).toFixed(2)}</span>
+                        </p>
+                      </div>
                       <div className="bg-[#F0f2f2] flex justify-center items-center gap-1 w-24 py-1 text-center drop-shadow-lg rounded-md">
                         <p className="">Qty:</p>
                         <p
@@ -78,16 +81,38 @@ export const Cart = () => {
                           +
                         </p>
                       </div>
-                      <button
-                        onClick={() => dispatch(deleteItem(p.id))}
-                        className="bg-red-500 w-36 py-1 rounded-lg text-white mt-2 hover:bg-red-700 active:bg-red-900 duration-300"
-                      >
-                        Delete Item
-                      </button>
+                      <div className="flex gap-3">
+                        <button
+                          onClick={() => dispatch(deleteItem(p.id))}
+                          className="bg-red-500 w-36 py-1 rounded-lg text-white mt-2 hover:bg-red-700 active:bg-red-900 duration-300"
+                        >
+                          Delete Item
+                        </button>
+                        <button
+                          onClick={() => {
+                            dispatch(
+                              addToWishlist({
+                                id: p.id,
+                                title: p.title,
+                                description: p.description,
+                                price: p.price,
+                                category: p.category,
+                                image: p.image,
+                                quantity: 1,
+                              })
+                            );
+                            dispatch(deleteItem(p.id));
+                          }}
+                          className="bg-yellow-400 w-36 py-1 rounded-lg text-white mt-2 hover:bg-yellow-500 active:bg-red-900 duration-300"
+                        >
+                          Move to Wishlist
+                        </button>
+                      </div>
                     </div>
                     <div className="">
-                      <p className="text-lg font-titleFont font-semibold">
-                        ₹{(p.price * p.quantity * 82).toFixed(2)}
+                      <p className="flex gap-2 items-center text-lg font-titleFont font-semibold">
+                        <CurrencyRupeeIcon style={{fontSize: "1rem"}} />
+                        <span>{(p.price * p.quantity * 82).toFixed(2)}</span>
                       </p>
                     </div>
                   </div>
@@ -111,12 +136,13 @@ export const Cart = () => {
               </p>
 
               <div>
-                <p className="font-semibold px-10 py-1 flex items-center justify-between gap-2">
+                <div className="font-semibold px-10 py-1 flex items-center justify-between gap-2">
                   Total:{" "}
-                  <span className="text-lg-font-bold">
-                    ₹{(totalPrice * 82).toFixed(2)}
-                  </span>
-                </p>
+                  <div className="flex gap-1 items-center text-lg-font-bold">
+                    <CurrencyRupeeIcon style={{fontSize: "1rem"}} />
+                    <span>{(totalPrice * 82).toFixed(2)}</span>
+                  </div>
+                </div>
               </div>
               <button className="w-full font-titleFont font-medium text-base bg-gradient-to-tr from-yellow-400 to-yellow-300 border hover:from-yellow-300 hover:to-yellow border-yellow-500 hover:border-yellow-700 active:bg-gradient-to-bl active:from-yellow-400 active:to-yellow-500 duration-200 py-1.5 rounded-md mt-3">
                 Proceed to payment

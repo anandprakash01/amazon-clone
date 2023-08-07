@@ -10,8 +10,8 @@ const FooterBottom = () => {
         <div className="w-full grid grid-cols-2  md:grid-cols-4 mdl:grid-cols-5 gap-3 place-content-center text-gray-400">
           {footerBottomItem.map((item) => {
             return (
-              <Link to="/comming-soon">
-                <div className="group cursor-pointer" key={item.id}>
+              <Link key={item.id} to="/comming-soon">
+                <div className="group cursor-pointer">
                   <h3 className="w-24 font-semibold text-[12px] group-hover:underline text-[#DDD] Leading-3 mb-[2px]">
                     {item.title}
                   </h3>

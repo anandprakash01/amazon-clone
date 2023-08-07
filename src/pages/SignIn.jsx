@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {setUserInfo} from "../redux/amazonSlice";
 
 //firebase imports for authentication
@@ -36,6 +36,11 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
 
+  const userInfo = useSelector((state) => state.amazon.userInfo);
+  // if (userInfo) {
+  //   navigate("/");
+  // }
+
   const handleChange = (e) => {
     switch (e.target.name) {
       case "email":
@@ -68,7 +73,7 @@ const SignIn = () => {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log(user);
+          // console.log(user);
           dispatch(
             setUserInfo({
               id: user.uid,

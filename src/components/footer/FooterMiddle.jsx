@@ -7,6 +7,8 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import {Facebook} from "@mui/icons-material";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+
 import {Link} from "react-router-dom";
 
 const FooterMiddle = () => {
@@ -47,6 +49,11 @@ const FooterMiddle = () => {
           </div>
         </div>
         <div className="flex gap-3 items-center justify-center duration-200 px-2 py-1">
+          <Link to="https://www.linkedin.com/in/hranand/" target="_blank">
+            <div className="hover:bg-amazon_yellow rounded-sm p-1">
+              <LinkedInIcon />
+            </div>
+          </Link>
           <Link to="https://github.com/anandprakash01" target="_blank">
             <div className="hover:bg-amazon_yellow rounded-sm p-1">
               <GitHubIcon />

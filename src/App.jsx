@@ -26,6 +26,7 @@ import {Cart} from "./pages/Cart";
 import ProductDetails from "./pages/ProductDetails";
 import CommingSoon from "./pages/CommingSoon";
 import Returns from "./pages/Returns";
+import Wishlist from "./pages/Wishlist";
 
 const Layout = () => {
   return (
@@ -44,6 +45,7 @@ function App() {
         <Route path="/" element={<Layout />} loader={productsData}>
           <Route index element={<Home />} loader={productsData}></Route>
           <Route path="/cart" element={<Cart />}></Route>
+          <Route path="/wishlist" element={<Wishlist />}></Route>
           <Route path="/product-details/:id" element={<ProductDetails />}></Route>
           <Route path="/comming-soon" element={<CommingSoon />}></Route>
           <Route path="/returns&order" element={<Returns />}></Route>
