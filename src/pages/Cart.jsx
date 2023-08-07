@@ -2,6 +2,7 @@ import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import {useState, useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 import {
   addToWishlist,
   decrementQuantity,
@@ -17,6 +18,7 @@ export const Cart = () => {
   const dispatch = useDispatch();
   const cartProducts = useSelector((state) => state.amazon.products);
   const [totalPrice, setTotalPrice] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let total = 0;
@@ -46,13 +48,25 @@ export const Cart = () => {
                   <div className="w-full flex items-center gap-6">
                     <div className="w-1/5">
                       <img
-                        className="w-full object-contain h-44"
+                        className="w-full object-contain h-44 cursor-pointer"
+                        onClick={() => {
+                          navigate(`/product-details/${p.id}`);
+                        }}
                         src={p.image}
                         alt="image"
                       />
                     </div>
                     <div className="w-4/5">
-                      <h2 className="font-semibold text-lg">{p.title}</h2>
+                      <h2 className="font-semibold text-lg ">
+                        <span
+                          className="cursor-pointer"
+                          onClick={() => {
+                            navigate(`/product-details/${p.id}`);
+                          }}
+                        >
+                          {p.title}
+                        </span>
+                      </h2>
                       <p className="text-sm">{p.description.substring(0, 125)}</p>
                       <div className="flex gap-5 items-center text-base ">
                         <p>Unit Price</p>

@@ -4,12 +4,13 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import {useState, useEffect} from "react";
 import {deleteItemWishlist, resetWishlist, addToCart} from "../redux/amazonSlice";
 import {emptyCart} from "../assets/index";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 
 const Wishlist = () => {
   const dispatch = useDispatch();
   const wishlistProducts = useSelector((state) => state.amazon.wishlist);
+  const navigate = useNavigate();
 
   return (
     <div className="w-full bg-gray-100 p-4">
@@ -31,13 +32,25 @@ const Wishlist = () => {
                   <div className="w-full flex items-center gap-6">
                     <div className="w-1/5">
                       <img
-                        className="w-full object-contain h-44"
+                        className="w-full object-contain h-44 cursor-pointer"
                         src={p.image}
                         alt="image"
+                        onClick={() => {
+                          navigate(`/product-details/${p.id}`);
+                        }}
                       />
                     </div>
                     <div className="w-4/5">
-                      <h2 className="font-semibold text-lg">{p.title}</h2>
+                      <h2 className="font-semibold text-lg">
+                        <span
+                          className="cursor-pointer"
+                          onClick={() => {
+                            navigate(`/product-details/${p.id}`);
+                          }}
+                        >
+                          {p.title}
+                        </span>
+                      </h2>
                       <p className="text-sm">{p.description.substring(0, 125)}</p>
                       <div className="flex gap-4 items-center text-base ">
                         <p>Unit Price</p>

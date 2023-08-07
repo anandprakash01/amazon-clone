@@ -27,6 +27,7 @@ import ProductDetails from "./pages/ProductDetails";
 import CommingSoon from "./pages/CommingSoon";
 import Returns from "./pages/Returns";
 import Wishlist from "./pages/Wishlist";
+import NoRoute from "./pages/NoRoute";
 
 const Layout = () => {
   return (
@@ -49,6 +50,7 @@ function App() {
           <Route path="/product-details/:id" element={<ProductDetails />}></Route>
           <Route path="/comming-soon" element={<CommingSoon />}></Route>
           <Route path="/returns&order" element={<Returns />}></Route>
+          <Route path="/:unknown" element={<NoRoute />}></Route>
         </Route>
         <Route path="/signin" element={<SignIn />}></Route>
         <Route path="/registration" element={<Registration />}></Route>

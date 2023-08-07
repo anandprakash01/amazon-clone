@@ -20,6 +20,7 @@ The main features and functionalities of Amazon project are:
 - Browse and search products
 - See product details
 - Add products to cart
+- Wishlist products
 - View order and return history
 
 ## Demo
@@ -37,6 +38,10 @@ Home Page
 Cart
 
 ![Project Logo](./src/assets/screenshots/Cart.png)
+
+Wishlist
+
+![Project Logo](./src/assets/screenshots/Wishlist.png)
 
 Sign Up and Sign In
 
