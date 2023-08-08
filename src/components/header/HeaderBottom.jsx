@@ -42,7 +42,7 @@ const HeaderBottom = () => {
           <MenuIcon />
           All
         </li>
-        <Link to="/comming-soon">
+        {/* <Link to="/comming-soon">
           <li className="headerHover hidden mdl:inline-flex">Today's Deals</li>
         </Link>
         <Link to="/comming-soon">
@@ -59,7 +59,7 @@ const HeaderBottom = () => {
         </Link>
         <Link to="/comming-soon">
           <li className="headerHover hidden mdl:inline-flex">Laptops</li>
-        </Link>
+        </Link> */}
       </ul>
 
       {/* ------------------SideNav start----------------------- */}

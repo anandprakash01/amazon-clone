@@ -105,7 +105,10 @@ const Header = () => {
         {/* ==================Search Start=================== */}
         <div className="h-10 rounded-md  hidden lgl:flex flex-grow relative">
           <span
-            onClick={() => setShowall(!showAll)}
+            onClick={() => {
+              setShowall(!showAll);
+              setOpenUser(false);
+            }}
             className=" h-full pl-2 bg-gray-200 hover:bg-gray-300 border-2 cursor-pointer duration-300 text-sm text-amazon_blue font-titleFont flex items-center justify-center rounded-tl-md rounded-bl-md select-none"
           >
             {selected}
@@ -155,7 +158,10 @@ const Header = () => {
           <div>
             <div
               className="flex flex-col items-start justify-center headerHover select-none"
-              onClick={() => setOpenUser((pre) => !pre)}
+              onClick={() => {
+                setOpenUser((pre) => !pre);
+                setShowall(false);
+              }}
             >
               <div className="flex flex-col mdl:flex-row items-center gap-1">
                 {userInfo.photoURL ? (
@@ -193,8 +199,8 @@ const Header = () => {
               </p>
             </div>
             {openUser ? (
-              <div className="absolute flex flex-col justify-center items-center bg-white text-black p-2 rounded-md border-black">
-                <div className="flex flex-col mdl:flex-row items-center gap-1 border-black">
+              <div className="absolute flex flex-col mt-[1px] gap-3 justify-center items-center bg-white text-black p-2 rounded-md border-black border-[1px]">
+                <div className="flex flex-col pt-5 mdl:flex-row items-center gap-1 border-black">
                   {userInfo.photoURL ? (
                     <Avatar
                       alt="Avatar"
@@ -220,7 +226,7 @@ const Header = () => {
                   )}
                 </div>
                 <div className="text-lg font-titleFont">{userInfo.userName}</div>
-                <div className="text-[0.7rem]">{userInfo.email}</div>
+                <div className="text-[0.7rem] pb-5">{userInfo.email}</div>
               </div>
             ) : null}
           </div>
