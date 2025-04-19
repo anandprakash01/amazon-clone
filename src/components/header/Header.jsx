@@ -9,6 +9,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
+import MenuIcon from "@mui/icons-material/Menu";
 import Avatar from "@mui/material/Avatar";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
@@ -20,20 +21,16 @@ import {setSearchProducts, userSignOut, setInputSearchVal} from "../../redux/ama
 const Header = () => {
   const auth = getAuth();
   const dispatch = useDispatch();
-  const userInfo = useSelector((state) => state.amazon.userInfo);
-  const productsCart = useSelector((state) => state.amazon.products);
-  const productsWishlist = useSelector((state) => state.amazon.wishlist);
-  const inputVal = useSelector((state) => state.amazon.inputSearchVal);
-  // console.log(productsCart);
-  // console.log(userInfo);
+  const userInfo = useSelector(state => state.amazon.userInfo);
+  const productsCart = useSelector(state => state.amazon.products);
+  const productsWishlist = useSelector(state => state.amazon.wishlist);
+  const inputVal = useSelector(state => state.amazon.inputSearchVal);
   const data = useLoaderData();
-  // const searchProducts = useSelector((state) => state.amazon.searchProducts);
-
-  // console.log(data.data);
 
   const [showAll, setShowall] = useState(false);
   const [openUser, setOpenUser] = useState(false);
   const [selected, setSelected] = useState("All");
+  const [mobileMenu, setMobileMenu] = useState(false);
   const refInput = useRef();
 
   if (inputVal == "") {
@@ -43,29 +40,27 @@ const Header = () => {
   const handleLogOut = () => {
     setShowall(false);
     setOpenUser(false);
+    setMobileMenu(false);
     signOut(auth)
       .then(() => {
         dispatch(userSignOut());
-        // console.log("signed out");
       })
-      .catch((error) => {
+      .catch(error => {
         const errCode = error.code;
         const errMsg = error.message;
         console.log(errCode, errMsg);
       });
-    // console.log(userInfo);
   };
-  // console.log(userInfo);
 
   const handleSearch = () => {
     setShowall(false);
     setOpenUser(false);
+    setMobileMenu(false);
 
     dispatch(setInputSearchVal(refInput.current.value));
-    // console.log(refInput.current.value);
     dispatch(
       setSearchProducts(
-        data.data.filter((prod) => {
+        data.data.filter(prod => {
           return prod.title.toLowerCase().includes(refInput.current.value.toLowerCase());
         })
       )
@@ -73,52 +68,68 @@ const Header = () => {
     refInput.current.value = "";
   };
 
-  const handlekeyDown = (e) => {
+  const handlekeyDown = e => {
     setShowall(false);
     setOpenUser(false);
-    // console.log(e.key);
+    setMobileMenu(false);
     if (e.key == "Enter") {
       handleSearch();
     }
   };
-  // console.log(searchProducts);
-  // console.log(inputVal);
+
+  const closeMobileMenu = () => {
+    setMobileMenu(false);
+    setShowall(false);
+    setOpenUser(false);
+  };
 
   return (
-    <div className="w-full sticky top-0 z-50">
-      <div className="w-full bg-amazon_blue text-white px-4 py-3 flex items-center gap-4">
-        {/* ==================Image Start=================== */}
-        <Link to="/">
+    <div className=" sticky top-0 z-50">
+      <div className="w-full bg-amazon_blue text-white px-2 py-2 xs:py-3 flex items-center justify-between gap-1 md:gap-2">
+        {/* ==================Mobile Menu Icon Start=================== */}
+        <div className="flex items-center md:hidden">
+          <button
+            onClick={() => setMobileMenu(!mobileMenu)}
+            className="text-white md:p-1"
+          >
+            <MenuIcon />
+          </button>
+        </div>
+
+        {/* ==================Logo Start=================== */}
+        <Link to="/" className="hidden md:flex" onClick={closeMobileMenu}>
           <div className="headerHover">
-            <img className="w-24 mt-2" src={logo} alt="logo" />
+            <img className="w-20 sm:w-24 mt-1 sm:mt-2" src={logo} alt="logo" />
           </div>
         </Link>
 
-        {/* ==================Delivery Start===================  */}
-        <div className="headerHover hidden mdl:inline-flex">
-          <LocationOnIcon />
-          <p className="text-sm text-lightText font-light flex flex-col">
-            Delivery to{" "}
-            <span className="text-sm font-semibold -mt-1 text-whiteText">India</span>
-          </p>
+        {/* ==================Delivery to===================  */}
+        <div className="headerHover hidden mdl:inline-flex items-center">
+          <LocationOnIcon sx={{fontSize: "1.4rem"}} />
+          <div className="text-xs leading-tight">
+            <span className="text-lightText">Delivery to</span>
+            <p className="text-xs font-semibold text-whiteText">India</p>
+          </div>
         </div>
+
         {/* ==================Search Start=================== */}
-        <div className="h-10 rounded-md  hidden lgl:flex flex-grow relative">
+        <div className="xs:h-8 md:h-10 rounded-md flex relative flex-grow">
           <span
             onClick={() => {
               setShowall(!showAll);
               setOpenUser(false);
+              setMobileMenu(false);
             }}
-            className=" h-full pl-2 bg-gray-200 hover:bg-gray-300 border-2 cursor-pointer duration-300 text-sm text-amazon_blue font-titleFont flex items-center justify-center rounded-tl-md rounded-bl-md select-none"
+            className="h-full pl-2 bg-gray-200 hover:bg-gray-300 border-2 cursor-pointer duration-300 text-sm text-amazon_blue font-titleFont flex items-center justify-center rounded-tl-md rounded-bl-md select-none"
           >
-            {selected}
+            <span className="hidden xs:inline-flex">{selected}</span>
             <span>
               <ArrowDropDownOutlined />
             </span>
             {showAll && (
               <div>
                 <ul className="absolute w-56 h-80 top-10 left-0 rounded-lg overflow-auto overflow-x-hidden bg-white border-[1px] border-amazon_blue text-black p-2 flex-col gap-1 z-50">
-                  {allItems.map((item) => {
+                  {allItems.map(item => {
                     return (
                       <li
                         onClick={() => {
@@ -137,33 +148,72 @@ const Header = () => {
             )}
           </span>
           <input
-            // value={inputField}
-            // onChange={handleSearch}
             onKeyDown={handlekeyDown}
             ref={refInput}
             placeholder="Search here"
-            className="h-full text-base text-amazon_blue flex-grow outline-none border-none px-2"
+            className="h-full w-full xs:text-xs md:text-base text-amazon_blue outline-none border-none px-2"
             type="text"
           />
           <span
-            className="w-12 h-full flex items-center justify-center bg-amazon_yellow hover:bg[#f3a847] duration-100 text-amazon_blue cursor-pointer rounded-tr-md rounded-br-md"
+            className="w-8 md:w-12 h-full flex items-center justify-center bg-amazon_yellow hover:bg[#f3a847] duration-100 text-amazon_blue cursor-pointer rounded-tr-md rounded-br-md"
             onClick={handleSearch}
           >
             <SearchIcon />
           </span>
         </div>
-        {/* ==================Signin Start=================== */}
 
+        {/* ==================Orders Start=================== */}
+        <Link to="/returns&order" onClick={closeMobileMenu} className="hidden lgl:flex">
+          <div className="flex flex-col items-start justify-center headerHover">
+            <p className="text-xs text-lightText font-light">Returns</p>
+            <p className="text-sm font-semibold -mt-1 text-whiteText">& Orders</p>
+          </div>
+        </Link>
+
+        {/* ==================Wishlist Start=================== */}
+        <Link to="/wishlist" onClick={closeMobileMenu}>
+          <div className="flex items-start justify-center headerHover relative">
+            <FavoriteIcon />
+            <p className="text-xs font-semibold mt-3 text-whiteText hidden lg:inline-flex">
+              Wishlist
+              <span className="absolute text-xs -top-1 left-6 font-semibold p-1 h-4 bg-[#f3a847] text-amazon_blue rounded-full flex justify-center items-center">
+                {productsWishlist.length}
+              </span>
+            </p>
+            <span className="absolute text-xs -top-1 left-3 xs:left-6 font-semibold p-1 h-4 bg-[#f3a847] text-amazon_blue rounded-full flex justify-center items-center lg:hidden">
+              {productsWishlist.length}
+            </span>
+          </div>
+        </Link>
+
+        {/* ==================Cart Start=================== */}
+        <Link to="/cart" onClick={closeMobileMenu}>
+          <div className="flex items-start justify-center headerHover relative">
+            <ShoppingCartIcon />
+            <p className="text-xs font-semibold mt-3 text-whiteText hidden lg:inline-flex">
+              Cart
+              <span className="absolute text-xs -top-1 left-6 font-semibold p-1 h-4 bg-[#f3a847] text-amazon_blue rounded-full flex justify-center items-center">
+                {productsCart.length}
+              </span>
+            </p>
+            <span className="absolute text-xs -top-1 left-3 xs:left-6 font-semibold p-1 h-4 bg-[#f3a847] text-amazon_blue rounded-full flex justify-center items-center lg:hidden">
+              {productsCart.length}
+            </span>
+          </div>
+        </Link>
+
+        {/* ==================Signin Start=================== */}
         {userInfo ? (
-          <div>
+          <div className="relative">
             <div
-              className="flex flex-col items-start justify-center headerHover select-none"
+              className="headerHover select-none"
               onClick={() => {
-                setOpenUser((pre) => !pre);
+                setOpenUser(pre => !pre);
                 setShowall(false);
+                setMobileMenu(false);
               }}
             >
-              <div className="flex flex-col mdl:flex-row items-center gap-1">
+              <div className="flex flex-row items-center gap-1">
                 {userInfo.photoURL ? (
                   <Avatar
                     alt="Avatar"
@@ -171,7 +221,6 @@ const Header = () => {
                     sx={{
                       width: "1.5rem",
                       height: "1.5rem",
-                      // display: "inline-block",
                     }}
                     className=""
                   />
@@ -180,27 +229,20 @@ const Header = () => {
                     sx={{
                       width: "1.5rem",
                       height: "1.5rem",
-                      // display: "inline-block",
                     }}
                   >
                     {userInfo.userName.split(" ")[0][0] +
                       userInfo.userName.split(" ")[1][0]}
                   </Avatar>
                 )}
-                <p className="text-xs text-white font-medium">
-                  Hello, {userInfo.userName}
+                <p className="text-xs text-white font-medium hidden md:flex">
+                  Hello, {userInfo.userName.split(" ")[0]}
                 </p>
               </div>
-              <p className="text-sm font-semibold -mt-1 text-whiteText hidden mdl:inline-flex">
-                Accounts & list{" "}
-                <span>
-                  <ArrowDropDownOutlined />
-                </span>
-              </p>
             </div>
-            {openUser ? (
-              <div className="absolute flex flex-col mt-[1px] gap-3 justify-center items-center bg-white text-black p-2 rounded-md border-black border-[1px]">
-                <div className="flex flex-col pt-5 mdl:flex-row items-center gap-1 border-black">
+            {openUser && (
+              <div className="absolute flex flex-col mt-[1px] gap-3 justify-center items-center bg-white text-black p-2 rounded-md border-black border-[1px] right-0 w-60">
+                <div className="flex flex-col pt-5 items-center gap-1 border-black">
                   {userInfo.photoURL ? (
                     <Avatar
                       alt="Avatar"
@@ -208,7 +250,6 @@ const Header = () => {
                       sx={{
                         width: "4rem",
                         height: "4rem",
-                        // display: "inline-block",
                       }}
                       className=""
                     />
@@ -217,7 +258,6 @@ const Header = () => {
                       sx={{
                         width: "4rem",
                         height: "4rem",
-                        // display: "inline-block",
                       }}
                     >
                       {userInfo.userName.split(" ")[0][0] +
@@ -227,17 +267,18 @@ const Header = () => {
                 </div>
                 <div className="text-lg font-titleFont">{userInfo.userName}</div>
                 <div className="text-[0.7rem] pb-5">{userInfo.email}</div>
+                <div
+                  onClick={handleLogOut}
+                  className="w-full flex items-center justify-center py-2 bg-red-500 hover:bg-red-600 text-white rounded-md cursor-pointer"
+                >
+                  <LogoutIcon className="mr-2" />
+                  Sign Out
+                </div>
               </div>
-            ) : null}
+            )}
           </div>
         ) : (
-          <Link
-            to="/signin"
-            onClick={() => {
-              setShowall(false);
-              setOpenUser(false);
-            }}
-          >
+          <Link to="/signin" onClick={closeMobileMenu} className="hidden xs:flex">
             <div className="flex flex-col items-start justify-center headerHover">
               <p className="text-sm mdl:text-xs text-white mdl:text-lightText font-light">
                 Hello, sign in
@@ -253,62 +294,108 @@ const Header = () => {
           </Link>
         )}
 
-        {/* ==================Orders Start=================== */}
-
-        <Link
-          to="/returns&order"
-          onClick={() => {
-            setShowall(false);
-            setOpenUser(false);
-          }}
-        >
-          <div className="hidden lgl:flex flex-col items-start justify-center headerHover">
-            <p className="text-xs text-lightText font-light">Returns</p>
-            <p className="text-sm font-semibold -mt-1 text-whiteText">& Orders</p>
-          </div>
-        </Link>
-        {/* ==================Card Start=================== */}
-        <Link
-          to="/wishlist"
-          onClick={() => {
-            setShowall(false);
-            setOpenUser(false);
-          }}
-        >
-          <div className="flex items-start justify-center headerHover relative">
-            <FavoriteIcon />
-            <p className="text-xs font-semibold mt-3 text-whiteText">
-              <span className="absolute text-xs -top-1 left-6 font-semibold p-1 h-4 bg-[#f3a847] text-amazon_blue rounded-full flex justify-center items-center">
-                {productsWishlist.length}
-              </span>
-            </p>
-          </div>
-        </Link>
-        <Link
-          to="/cart"
-          onClick={() => {
-            setShowall(false);
-            setOpenUser(false);
-          }}
-        >
-          <div className="flex items-start justify-center headerHover relative">
-            <ShoppingCartIcon />
-            <p className="text-xs font-semibold mt-3 text-whiteText">
-              Cart{" "}
-              <span className="absolute text-xs -top-1 left-6 font-semibold p-1 h-4 bg-[#f3a847] text-amazon_blue rounded-full flex justify-center items-center">
-                {productsCart.length}
-              </span>
-            </p>
-          </div>
-        </Link>
-        {/* ==================Card End=================== */}
-
+        {/* ==================Logout Button (Desktop)=================== */}
         {userInfo && (
-          <div onClick={handleLogOut} className="headerHover">
+          <div onClick={handleLogOut} className="headerHover hidden md:flex">
             <LogoutIcon />
           </div>
         )}
       </div>
+
+      {/* ==================Mobile Menu=================== */}
+      {mobileMenu && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 md:hidden">
+          <div className="bg-amazon_blue h-full w-[70%] max-w-[300px] flex flex-col overflow-y-auto">
+            <div className="p-4 border-b border-gray-700 flex items-center bg-amazon_lite">
+              {userInfo ? (
+                <div className="flex items-center gap-2">
+                  {userInfo.photoURL ? (
+                    <Avatar
+                      alt="Avatar"
+                      src={userInfo.photoURL}
+                      sx={{width: "2rem", height: "2rem"}}
+                    />
+                  ) : (
+                    <Avatar sx={{width: "2rem", height: "2rem"}}>
+                      {userInfo.userName.split(" ")[0][0] +
+                        userInfo.userName.split(" ")[1][0]}
+                    </Avatar>
+                  )}
+                  <p className="text-white font-medium">
+                    Hello, {userInfo.userName.split(" ")[0]}
+                  </p>
+                </div>
+              ) : (
+                <Link
+                  to="/signin"
+                  onClick={closeMobileMenu}
+                  className="text-white font-medium flex items-center gap-2"
+                >
+                  <AccountCircleIcon />
+                  Sign In
+                </Link>
+              )}
+            </div>
+
+            <div className="p-4 border-b border-gray-700">
+              <h3 className="text-white font-bold mb-2">Shop By Category</h3>
+              <ul className="text-gray-200">
+                {allItems.slice(0, 8).map(item => (
+                  <li
+                    key={item.id}
+                    className="py-2 hover:text-white transition-colors"
+                    onClick={closeMobileMenu}
+                  >
+                    {item.title}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="p-4 border-b border-gray-700">
+              <h3 className="text-white font-bold mb-2">Account & Settings</h3>
+              <ul className="text-gray-200">
+                <li className="py-2 hover:text-white transition-colors">
+                  <Link to="/account" onClick={closeMobileMenu}>
+                    Your Account
+                  </Link>
+                </li>
+                <li className="py-2 hover:text-white transition-colors">
+                  <Link to="/returns&order" onClick={closeMobileMenu}>
+                    Returns & Orders
+                  </Link>
+                </li>
+                <li className="py-2 hover:text-white transition-colors">
+                  <Link to="/wishlist" onClick={closeMobileMenu}>
+                    Your Wishlist
+                  </Link>
+                </li>
+                <li className="py-2 hover:text-white transition-colors">
+                  <Link to="/cart" onClick={closeMobileMenu}>
+                    Your Cart
+                  </Link>
+                </li>
+                {userInfo && (
+                  <li
+                    className="py-2 text-red-400 hover:text-red-300 transition-colors"
+                    onClick={handleLogOut}
+                  >
+                    Sign Out
+                  </li>
+                )}
+              </ul>
+            </div>
+
+            <button
+              onClick={closeMobileMenu}
+              className="absolute top-4 right-4 text-white hover:text-red-500"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+
       <HeaderBottom />
     </div>
   );
