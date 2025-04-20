@@ -42,12 +42,21 @@ const HeaderBottom = () => {
           <MenuIcon />
           All
         </li>
-        <li className="headerHover">Today's Deals</li>
-        <li className="headerHover">Today's Deals</li>
-        <li className="headerHover">Customer Service</li>
-        <li className="headerHover">Gift Cards</li>
-        <li className="headerHover">Sell</li>
-        <li className="headerHover">Registry</li>
+        <Link to="" className="headerHover">
+          Today's Deals
+        </Link>
+        <Link to="./customer-service" className="headerHover">
+          Customer Service
+        </Link>
+        <Link to="./coming-soon" className="headerHover">
+          Gift Cards
+        </Link>
+        <Link to="./coming-soon" className="headerHover">
+          Sell
+        </Link>
+        <Link to="./coming-soon" className="headerHover">
+          Registry
+        </Link>
       </ul>
 
       {/* ------------------SideNav start----------------------- */}
@@ -88,41 +97,40 @@ const HeaderBottom = () => {
                   </div>
                 )}
               </div>
-
+              <SideNavContent
+                onClick={() => setSideBar(false)}
+                title="Help & Settings"
+                links={[
+                  {text: "Your Account", url: "/account"},
+                  {text: "Customer Service", url: "/customer-service"},
+                  {text: "Contact Us", url: "/contact-us"},
+                ]}
+              />
               <SideNavContent
                 onClick={() => setSideBar(false)}
                 title="Digital Content & Devices"
                 links={[
-                  {text: "Amazon Music", url: "/comming-soon"},
-                  {text: "Kindle E-readers & Books", url: "/comming-soon"},
-                  {text: "Amazon App store", url: "/comming-soon"},
+                  {text: "Amazon Music", url: "/coming-soon"},
+                  {text: "Kindle E-readers & Books", url: "/coming-soon"},
+                  {text: "Amazon App store", url: "/coming-soon"},
                 ]}
               />
               <SideNavContent
                 onClick={() => setSideBar(false)}
                 title="Shop By Department"
                 links={[
-                  {text: "Electronics", url: "/comming-soon"},
-                  {text: "Computers", url: "/comming-soon"},
-                  {text: "Smart Home", url: "/comming-soon"},
+                  {text: "Electronics", url: "/coming-soon"},
+                  {text: "Computers", url: "/coming-soon"},
+                  {text: "Smart Home", url: "/coming-soon"},
                 ]}
               />
               <SideNavContent
                 title="Programs & Features"
                 onClick={() => setSideBar(false)}
                 links={[
-                  {text: "Gift Cards", url: "/comming-soon"},
-                  {text: "Amazon live", url: "/comming-soon"},
-                  {text: "International Shopping", url: "/comming-soon"},
-                ]}
-              />
-              <SideNavContent
-                onClick={() => setSideBar(false)}
-                title="Help & Settings"
-                links={[
-                  {text: "Your Account", url: "/comming-soon"},
-                  {text: "Customer Service", url: "/comming-soon"},
-                  {text: "Contact Us", url: "/comming-soon"},
+                  {text: "Gift Cards", url: "/coming-soon"},
+                  {text: "Amazon live", url: "/coming-soon"},
+                  {text: "International Shopping", url: "/coming-soon"},
                 ]}
               />
             </motion.div>

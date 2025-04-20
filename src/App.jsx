@@ -24,10 +24,16 @@ import SignIn from "./pages/SignIn";
 import Registration from "./pages/Registration";
 import {Cart} from "./pages/Cart";
 import ProductDetails from "./pages/ProductDetails";
-import CommingSoon from "./pages/CommingSoon";
+import ComingSoon from "./pages/ComingSoon";
 import Returns from "./pages/Returns";
 import Wishlist from "./pages/Wishlist";
 import NoRoute from "./pages/NoRoute";
+import AboutUs from "./pages/AboutUs";
+import CustomerStories from "./pages/CustomerStories";
+import CustomerService from "./pages/CustomerService";
+import Account from "./pages/Account";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import ContactUs from "./pages/ContactUs";
 
 const Layout = () => {
   return (
@@ -48,12 +54,18 @@ function App() {
           <Route path="/cart" element={<Cart />}></Route>
           <Route path="/wishlist" element={<Wishlist />}></Route>
           <Route path="/product-details/:id" element={<ProductDetails />}></Route>
-          <Route path="/comming-soon" element={<CommingSoon />}></Route>
+          <Route path="/coming-soon" element={<ComingSoon />}></Route>
           <Route path="/returns&order" element={<Returns />}></Route>
-          <Route path="/:unknown" element={<NoRoute />}></Route>
+          <Route path="/about-us" element={<AboutUs />}></Route>
+          <Route path="/account" element={<Account />}></Route>
+          <Route path="/customer-service" element={<CustomerService />}></Route>
+          <Route path="/customer-stories" element={<CustomerStories />}></Route>
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/contact-us" element={<ContactUs />}></Route>
         </Route>
         <Route path="/signin" element={<SignIn />}></Route>
         <Route path="/registration" element={<Registration />}></Route>
+        <Route path="/:unknown" element={<NoRoute />}></Route>
       </Route>
     )
   );

@@ -3,16 +3,16 @@ export const allItems = [
   {id: 11, title: "Beauty & Personal Care"},
   {id: 12, title: "Books"},
   {id: 13, title: "Computers"},
-  {id: 14, title: "Electronis"},
+  {id: 14, title: "Electronics"},
   {id: 15, title: "Home & Kitchen"},
   {id: 16, title: "Industrial & Scientific"},
   {id: 17, title: "Kindle Store"},
   {id: 18, title: "Luggage"},
-  {id: 19, title: "Mens's Fashinon"},
+  {id: 19, title: "Mens's Fashion"},
   {id: 20, title: "Movies & TV"},
   {id: 21, title: "Sports & Outdoors"},
   {id: 22, title: "Toys & Games"},
-  {id: 23, title: "Womens's Fashinon"},
+  {id: 23, title: "women's Fashion"},
 ];
 
 export const middleList = [
@@ -21,7 +21,7 @@ export const middleList = [
     title: "Get to Know us",
     listItem: {
       id: "0011",
-      listData: ["About us", "Careers", "Press Releases", "Amazon Science"],
+      listData: ["About us", "Customer Stories", "Privacy Policy"],
     },
   },
   {
@@ -29,41 +29,41 @@ export const middleList = [
     title: "Contact with us",
     listItem: {
       id: "0021",
-      listData: ["Facebook", "Twitter", "Instagram"],
+      listData: ["Linkedin", "Github", "Instagram"],
     },
   },
-  {
-    id: "003",
-    title: "Make Money with Us",
-    listItem: {
-      id: "0031",
-      listData: [
-        "Sell on Amazon",
-        "Sell under Amazon Accelerator",
-        "Protect and Build Your Brand",
-        "Amazon Global Selling",
-        "Become an Affiliate",
-        "Fulfilment by Amazon",
-        "Amazon Pay on Merchants",
-      ],
-    },
-  },
+  // {
+  //   id: "003",
+  //   title: "Make Money with Us",
+  //   listItem: {
+  //     id: "0031",
+  //     listData: [
+  //       "Sell on Amazon",
+  //       "Sell under Amazon Accelerator",
+  //       "Protect and Build Your Brand",
+  //       "Amazon Global Selling",
+  //       "Become an Affiliate",
+  //       "Fulfilment by Amazon",
+  //       "Amazon Pay on Merchants",
+  //     ],
+  //   },
+  // },
 
-  {
-    id: "004",
-    title: "Let Us Help You",
-    listItem: {
-      id: "0041",
-      listData: [
-        "Amazon and COVID-19",
-        "Your Account",
-        "Returns Centre",
-        "100% Purchase Protection",
-        "Amazon App Download",
-        "Help",
-      ],
-    },
-  },
+  // {
+  //   id: "004",
+  //   title: "Let Us Help You",
+  //   listItem: {
+  //     id: "0041",
+  //     listData: [
+  //       "Amazon and COVID-19",
+  //       "Your Account",
+  //       "Returns Centre",
+  //       "100% Purchase Protection",
+  //       "Amazon App Download",
+  //       "Help",
+  //     ],
+  //   },
+  // },
 ];
 
 export const footerBottomItem = [

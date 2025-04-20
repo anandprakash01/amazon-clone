@@ -44,7 +44,7 @@ const Registration = () => {
   const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     switch (e.target.name) {
       case "name":
         setUserDetails({...userDetails, name: e.target.value});
@@ -74,36 +74,36 @@ const Registration = () => {
   };
 
   //Email Validation
-  const emailValidation = (email) => {
+  const emailValidation = email => {
     return String(email)
       .toLowerCase()
       .match(/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/);
   };
 
-  const handleRegistration = (e) => {
+  const handleRegistration = e => {
     e.preventDefault();
     if (!userDetails.name) {
-      setErros((pre) => ({...pre, errName: "Enter your Name"}));
+      setErros(pre => ({...pre, errName: "Enter your Name"}));
     }
     if (!userDetails.email) {
-      setErros((pre) => ({...pre, errEmail: "Enter your email"}));
+      setErros(pre => ({...pre, errEmail: "Enter your email"}));
       setFirebaseErr("");
     } else {
       if (!emailValidation(userDetails.email)) {
-        setErros((pre) => ({...pre, errEmail: "Enter a valid email"}));
+        setErros(pre => ({...pre, errEmail: "Enter a valid email"}));
       }
     }
     if (!userDetails.phone) {
-      setErros((pre) => ({...pre, errPhone: "Enter your Phone number"}));
+      setErros(pre => ({...pre, errPhone: "Enter your Phone number"}));
     }
     if (!userDetails.password) {
-      setErros((pre) => ({...pre, errPassword: "Enter your Password"}));
+      setErros(pre => ({...pre, errPassword: "Enter your Password"}));
     }
     if (!userDetails.cPassword) {
-      setErros((pre) => ({...pre, errcPassword: "Confirm Password"}));
+      setErros(pre => ({...pre, errcPassword: "Confirm Password"}));
     } else {
       if (userDetails.password != userDetails.cPassword) {
-        setErros((pre) => ({...pre, errcPassword: "Password must be same"}));
+        setErros(pre => ({...pre, errcPassword: "Password must be same"}));
       }
     }
 
@@ -120,7 +120,7 @@ const Registration = () => {
       // console.log(errors);
 
       createUserWithEmailAndPassword(auth, userDetails.email, userDetails.password)
-        .then((userCredential) => {
+        .then(userCredential => {
           updateProfile(auth.currentUser, {
             displayName: userDetails.name,
             // photoURL:
@@ -138,7 +138,7 @@ const Registration = () => {
             navigate("/signin");
           }, 2000);
         })
-        .catch((error) => {
+        .catch(error => {
           setLoading(false);
           const errCode = error.code;
           // const errMsg = error.message;
@@ -152,11 +152,11 @@ const Registration = () => {
     }
   };
 
-  const handleLoginWithGoogle = (e) => {
+  const handleLoginWithGoogle = e => {
     e.preventDefault();
     setLoading(true);
     signInWithPopup(auth, provider)
-      .then((result) => {
+      .then(result => {
         console.log(result);
         const user = result.user;
         dispatch(
@@ -176,7 +176,7 @@ const Registration = () => {
           navigate("/");
         }, 3000);
       })
-      .catch((error) => {
+      .catch(error => {
         setLoading(false);
         console.log("ERROR: ", error);
       });
@@ -325,13 +325,6 @@ const Registration = () => {
                   <p className=" text-center text-l text-green-600 ">{successMsg}</p>
                 </div>
               )}
-            </div>
-            <p className="text-xs text-black leading-4 mt-4">
-              By Creating Account, you agree to Amazon's{" "}
-              <span className="text-blue-600">Conditions of use</span> and{" "}
-              <span className="text-blue-600">Pivacy Notice</span>
-            </p>
-            <div>
               <p className="text-xs text-black">
                 Already have an account{" "}
                 <Link to="/signin">
@@ -343,6 +336,13 @@ const Registration = () => {
                   </span>
                 </Link>
               </p>
+            </div>
+            <p className="text-xs text-black leading-4 mt-4">
+              By Creating Account, you agree to Amazon's{" "}
+              <span className="text-blue-600">Conditions of use</span> and{" "}
+              <span className="text-blue-600">Pivacy Notice</span>
+            </p>
+            <div>
               <p className="text-xs text-black -mt-2">
                 Buying for work?{" "}
                 <span className="text-xs text-blue-600 hover:text-orange-600 hover:underline underline-offset-1 cursor-pointer duration-100">
