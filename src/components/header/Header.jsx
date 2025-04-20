@@ -304,7 +304,7 @@ const Header = () => {
 
       {/* ==================Mobile Menu=================== */}
       {mobileMenu && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 md:hidden">
+        <div className="fixed inset-0 bg-black bg-opacity-70 z-50 md:hidden">
           <div className="bg-amazon_blue h-full w-[70%] max-w-[300px] flex flex-col overflow-y-auto">
             <div className="p-4 border-b border-gray-700 flex items-center bg-amazon_lite">
               {userInfo ? (
