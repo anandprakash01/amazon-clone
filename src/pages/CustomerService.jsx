@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, {useState} from "react";
+import {Link} from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
@@ -10,10 +10,9 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 
 const CustomerService = () => {
-  const [searchQuery, setSearchQuery] = useState("");
   const [expandedFaq, setExpandedFaq] = useState(null);
 
-  const handleFaqToggle = (index) => {
+  const handleFaqToggle = index => {
     setExpandedFaq(expandedFaq === index ? null : index);
   };
 
@@ -72,23 +71,6 @@ const CustomerService = () => {
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold text-amazon_blue mb-6">Customer Service</h1>
-
-        {/* Search Bar */}
-        <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-          <h2 className="text-xl font-semibold mb-4">What can we help you with?</h2>
-          <div className="flex items-center border border-gray-300 rounded-md overflow-hidden">
-            <input
-              type="text"
-              placeholder="Search for help topics..."
-              className="flex-grow p-3 outline-none"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button className="bg-amazon_blue text-white p-3">
-              <SearchIcon />
-            </button>
-          </div>
-        </div>
 
         {/* Help Categories */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">

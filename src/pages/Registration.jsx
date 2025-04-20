@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 import {
   getAuth,
@@ -23,6 +23,14 @@ const Registration = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const userInfo = useSelector(state => state.amazon.userInfo);
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [userInfo, navigate]);
 
   const [userDetails, setUserDetails] = useState({
     name: "",
@@ -300,6 +308,8 @@ const Registration = () => {
               >
                 Continue
               </button>
+              {/* Add this below your existing register button */}
+
               <div className="text-center">Or</div>
               <button
                 onClick={handleLoginWithGoogle}
@@ -336,20 +346,17 @@ const Registration = () => {
                   </span>
                 </Link>
               </p>
+              <div className="mt-4 text-center">
+                <Link to="/" className="text-amazon_blue hover:underline text-sm">
+                  Continue without registering
+                </Link>
+              </div>
             </div>
             <p className="text-xs text-black leading-4 mt-4">
               By Creating Account, you agree to Amazon's{" "}
               <span className="text-blue-600">Conditions of use</span> and{" "}
-              <span className="text-blue-600">Pivacy Notice</span>
+              <span className="text-blue-600">Privacy Notice</span>
             </p>
-            <div>
-              <p className="text-xs text-black -mt-2">
-                Buying for work?{" "}
-                <span className="text-xs text-blue-600 hover:text-orange-600 hover:underline underline-offset-1 cursor-pointer duration-100">
-                  Create a business account
-                </span>
-              </p>
-            </div>
           </div>
         </form>
       </div>
@@ -366,7 +373,7 @@ const Registration = () => {
           </p>
         </div>
         <p className="text-xs text-gray-600">
-          © 1996-2023, Amazon.com, Inc. or its affiliates
+          © 1996-2024, Amazon.com, Inc. or its affiliates
         </p>
       </div>
     </div>

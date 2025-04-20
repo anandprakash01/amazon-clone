@@ -1,5 +1,5 @@
 import React, {useRef, useState, useEffect} from "react";
-import {Link, useLoaderData} from "react-router-dom";
+import {Link, useLoaderData, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getAuth, signOut} from "firebase/auth";
 
@@ -32,6 +32,7 @@ const Header = () => {
   const [selected, setSelected] = useState("All");
   const [mobileMenu, setMobileMenu] = useState(false);
   const refInput = useRef();
+  const navigate = useNavigate();
 
   if (inputVal == "") {
     dispatch(setSearchProducts(data.data));
@@ -41,6 +42,7 @@ const Header = () => {
     setShowall(false);
     setOpenUser(false);
     setMobileMenu(false);
+    navigate("/");
     signOut(auth)
       .then(() => {
         dispatch(userSignOut());
@@ -338,21 +340,6 @@ const Header = () => {
             </div>
 
             <div className="p-4 border-b border-gray-700">
-              <h3 className="text-white font-bold mb-2">Shop By Category</h3>
-              <ul className="text-gray-200">
-                {allItems.slice(0, 8).map(item => (
-                  <li
-                    key={item.id}
-                    className="py-2 hover:text-white transition-colors"
-                    onClick={closeMobileMenu}
-                  >
-                    {item.title}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="p-4 border-b border-gray-700">
               <h3 className="text-white font-bold mb-2">Account & Settings</h3>
               <ul className="text-gray-200">
                 <li className="py-2 hover:text-white transition-colors">
@@ -383,6 +370,19 @@ const Header = () => {
                     Sign Out
                   </li>
                 )}
+              </ul>
+            </div>
+
+            <div className="p-4 border-b border-gray-700">
+              <h3 className="text-white font-bold mb-2">Shop By Category</h3>
+              <ul className="text-gray-200">
+                {allItems.slice(1, 8).map(item => (
+                  <li key={item.id} className="py-2 hover:text-white transition-colors">
+                    <Link to="./coming-soon" onClick={closeMobileMenu}>
+                      {item.title}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 

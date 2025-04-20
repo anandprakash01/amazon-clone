@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -13,10 +13,11 @@ const Account = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("profile");
 
-  if (!userInfo) {
-    navigate("/signin");
-    return null;
-  }
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/");
+    }
+  }, [userInfo, navigate]);
 
   const accountSections = [
     {

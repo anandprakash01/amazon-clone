@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {setUserInfo} from "../redux/amazonSlice";
@@ -36,12 +36,15 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
 
-  const userInfo = useSelector((state) => state.amazon.userInfo);
-  // if (userInfo) {
-  //   navigate("/");
-  // }
+  const userInfo = useSelector(state => state.amazon.userInfo);
 
-  const handleChange = (e) => {
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [userInfo, navigate]);
+
+  const handleChange = e => {
     switch (e.target.name) {
       case "email":
         setEmail(e.target.value);
@@ -58,7 +61,7 @@ const SignIn = () => {
     // console.log(email, password);
   };
 
-  const handleLoginWithEmail = (e) => {
+  const handleLoginWithEmail = e => {
     e.preventDefault();
     if (!email) {
       setErrEmail("Enter your email");
@@ -71,7 +74,7 @@ const SignIn = () => {
       // console.log(password);
       setLoading(true);
       signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
+        .then(userCredential => {
           const user = userCredential.user;
           // console.log(user);
           dispatch(
@@ -92,7 +95,7 @@ const SignIn = () => {
             navigate("/");
           }, 3000);
         })
-        .catch((error) => {
+        .catch(error => {
           setLoading(false);
           const errCode = error.code;
           const errMsg = error.message;
@@ -112,11 +115,11 @@ const SignIn = () => {
     }
   };
 
-  const handleLoginWithGoogle = (e) => {
+  const handleLoginWithGoogle = e => {
     e.preventDefault();
     setLoading(true);
     signInWithPopup(auth, provider)
-      .then((result) => {
+      .then(result => {
         // console.log("received result : ", result);
         const user = result.user;
         dispatch(
@@ -136,7 +139,7 @@ const SignIn = () => {
           navigate("/");
         }, 3000);
       })
-      .catch((error) => {
+      .catch(error => {
         setLoading(false);
         console.log("ERROR: ", error);
       });
@@ -240,13 +243,7 @@ const SignIn = () => {
               <p className="text-xs text-black leading-4 mt-4">
                 By Continuing, you agree to Amazon's{" "}
                 <span className="text-blue-600">Conditions of use</span> and{" "}
-                <span className="text-blue-600">Pivacy Notice</span>
-              </p>
-              <p className="text-xs text-gray-600 mt-4 cursor-pointer group">
-                <ArrowRightIcon />
-                <span className="text-blue-600 group-hover:text-orange-700 group-hover:underline underline-offset-1">
-                  Need help?
-                </span>
+                <span className="text-blue-600">Privacy Notice</span>
               </p>
             </div>
             <p className=" w-full text-xs text-gray-600 mt-4 flex items-center">
@@ -257,11 +254,21 @@ const SignIn = () => {
             <Link to="/registration">
               <button
                 // onClick={(e) => e.preventDefault()}
-                className="w-full py-1.5 mt-4 text-sm font-normal rounded-sm bg-gradient-to-t from-slate-200 to-slate-100 hover:bg-gradient-to-b border border-zinc-400 active:border-yellow-800 active:shadow-amazonInput"
+                className="w-full py-1.5 px-5 mt-4 text-sm font-normal rounded-sm bg-gradient-to-t from-slate-200 to-slate-100 hover:bg-gradient-to-b border border-zinc-400 active:border-yellow-800 active:shadow-amazonInput"
               >
                 Create your Amazon account
               </button>
             </Link>
+            {/* Add this below your existing sign in button */}
+            <div className="mt-4 text-center">
+              <Link
+                to="/"
+                className="w-full py-1.5 px-4 text-sm font-normal rounded-sm bg-gradient-to-t from-slate-100 to-white hover:bg-gradient-to-b border border-zinc-300 inline-flex items-center justify-center gap-1 transition-colors"
+              >
+                Continue without signing in
+                <ArrowRightIcon fontSize="small" />
+              </Link>
+            </div>
           </form>
         )}
       </div>
