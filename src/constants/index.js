@@ -74,7 +74,7 @@ export const footerBottomItem = [
   },
   {
     id: "2222",
-    title: "Shopbop",
+    title: "Clothes, Shoes & Jewelry",
     des: "Designer Fashion Brands",
   },
   {

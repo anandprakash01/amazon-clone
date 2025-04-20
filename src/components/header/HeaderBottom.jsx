@@ -54,9 +54,6 @@ const HeaderBottom = () => {
         <Link to="./coming-soon" className="headerHover">
           Sell
         </Link>
-        <Link to="./coming-soon" className="headerHover">
-          Registry
-        </Link>
       </ul>
 
       {/* ------------------SideNav start----------------------- */}
