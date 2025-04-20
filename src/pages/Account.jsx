@@ -16,6 +16,7 @@ const Account = () => {
   useEffect(() => {
     if (!userInfo) {
       navigate("/");
+      alert("Please log in to access your account.");
     }
   }, [userInfo, navigate]);
 
