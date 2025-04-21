@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, {useState} from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-import { resetCart } from "../redux/amazonSlice";
+import {resetCart} from "../redux/amazonSlice";
 
 const Payment = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const cartProducts = useSelector((state) => state.amazon.products);
-  const userInfo = useSelector((state) => state.amazon.userInfo);
+  const cartProducts = useSelector(state => state.amazon.products);
+  const userInfo = useSelector(state => state.amazon.userInfo);
   const [paymentMethod, setPaymentMethod] = useState("card");
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -25,10 +25,10 @@ const Payment = () => {
     }
   }, [userInfo, navigate]);
 
-  const handlePaymentSubmit = (e) => {
+  const handlePaymentSubmit = e => {
     e.preventDefault();
     setIsProcessing(true);
-    
+
     // Simulate payment processing
     setTimeout(() => {
       // Clear the cart after successful payment
@@ -51,7 +51,7 @@ const Payment = () => {
               <div className="w-full md:w-2/3">
                 <div className="bg-white p-4 rounded-md shadow-sm mb-4">
                   <h3 className="text-lg font-semibold mb-4">Shipping Address</h3>
-                  <p className="text-gray-700">{userInfo?.name || "User"}</p>
+                  <p className="text-gray-700">{userInfo?.userName || "User"}</p>
                   <p className="text-gray-700">ABC Road</p>
                   <p className="text-gray-700">City, State 12345</p>
                   <p className="text-gray-700">India</p>
