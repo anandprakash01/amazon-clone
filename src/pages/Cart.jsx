@@ -19,6 +19,7 @@ export const Cart = () => {
   const cartProducts = useSelector(state => state.amazon.products);
   const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
+  const userInfo = useSelector(state => state.amazon.userInfo);
 
   useEffect(() => {
     let total = 0;
@@ -27,6 +28,14 @@ export const Cart = () => {
       return setTotalPrice(total);
     });
   }, [cartProducts]);
+
+  const handleProceedToPayment = () => {
+    if (userInfo) {
+      navigate("/payment");
+    } else {
+      navigate("/signin");
+    }
+  };
 
   return (
     <div className="w-full bg-gray-100 p-4">
@@ -171,7 +180,10 @@ export const Cart = () => {
                     <span>{(totalPrice * 82).toFixed(2)}</span>
                   </div>
                 </div>
-                <button className="w-full md:w-auto md:min-w-[200px] font-titleFont font-medium text-base bg-gradient-to-tr from-yellow-400 to-yellow-300 border hover:from-yellow-300 hover:to-yellow border-yellow-500 hover:border-yellow-700 active:bg-gradient-to-bl active:from-yellow-400 active:to-yellow-500 duration-200 py-2 rounded-md">
+                <button
+                  onClick={handleProceedToPayment}
+                  className="w-full md:w-auto md:min-w-[200px] font-titleFont font-medium text-base bg-gradient-to-tr from-yellow-400 to-yellow-300 border hover:from-yellow-300 hover:to-yellow border-yellow-500 hover:border-yellow-700 active:bg-gradient-to-bl active:from-yellow-400 active:to-yellow-500 duration-200 py-2 rounded-md"
+                >
                   Proceed to payment
                 </button>
               </div>
@@ -191,7 +203,7 @@ export const Cart = () => {
             <h1 className="font-titleFont text-xl font-bold">No Products</h1>
             <Link to="/">
               <button className="mt-6 bg-yellow-400 rounded-md cursor-pointer hover:bg-yellow-500 active:bg-yellow-700 px-8 py-2 font-titleFont text-semibold text-lg">
-                Countinue Shopping
+                Continue Shopping
               </button>
             </Link>
           </div>

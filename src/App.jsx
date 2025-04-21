@@ -1,8 +1,5 @@
-import {useState} from "react";
 import {ScrollRestoration} from "react-router-dom";
 
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import "slick-carousel/slick/slick.css";
 
@@ -16,7 +13,6 @@ import {
 } from "react-router-dom";
 
 import Header from "./components/header/Header";
-import Banner from "./components/home/Banner";
 import Footer from "./components/footer/Footer";
 import Home from "./pages/Home";
 import {productsData} from "./api/api";
@@ -34,6 +30,8 @@ import CustomerService from "./pages/CustomerService";
 import Account from "./pages/Account";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import ContactUs from "./pages/ContactUs";
+import Payment from "./pages/Payment";
+import OrderSuccess from "./pages/OrderSuccess";
 
 const Layout = () => {
   return (
@@ -63,6 +61,9 @@ function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/contact-us" element={<ContactUs />}></Route>
         </Route>
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/order-success" element={<OrderSuccess />} />
+
         <Route path="/signin" element={<SignIn />}></Route>
         <Route path="/registration" element={<Registration />}></Route>
         <Route path="/:unknown" element={<NoRoute />}></Route>
